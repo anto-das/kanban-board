@@ -46,8 +46,8 @@ const loginUser = async (payload: Omit<userInfo, "name">) => {
   if (!isMatch) {
     throw new Error("Invalid email or password");
   }
-  const { id, name, email: loginUser, } = findUser;
-  const token = jwt.sign({ id, name, loginUser, }, env.JWT_SECRET, {
+  const { id, name, email: loginUser } = findUser;
+  const token = jwt.sign({ id, name, loginUser }, env.JWT_SECRET, {
     expiresIn: "8h",
   });
   return { ...findUser, token };

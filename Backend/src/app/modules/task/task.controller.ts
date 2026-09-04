@@ -14,6 +14,25 @@ const createTask = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const moveTask = catchAsync(async (req: Request, res: Response) => {
+  const taskId = req.body.taskId;
+  const targetedColumnId = req.body.columnId;
+  const targetedPosition = Number(req.body.position);
+  console.log({ targetedColumnId, targetedPosition });
+  const result = await taskService.moveTask(
+    taskId,
+    targetedColumnId,
+    targetedPosition,
+  );
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Task column updated successfully..",
+    data: result,
+  });
+});
+
 export const taskController = {
   createTask,
+  moveTask,
 };

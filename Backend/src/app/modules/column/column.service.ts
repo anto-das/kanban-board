@@ -4,10 +4,10 @@ import { prisma } from "../../lib/prisma";
 const createColumn = async (
   payload: Omit<Column, "id" | "createdAt" | "updatedAt">,
 ): Promise<Column> => {
-  const result = await prisma.column.create({
+  const column = await prisma.column.create({
     data: payload,
   });
-  return result;
+  return column;
 };
 
 export const columnService = {

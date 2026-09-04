@@ -1,16 +1,14 @@
 import { Router } from "express";
-import { columnController } from "./column.controller";
 import { authenticate } from "../../middleware/auth.middleware";
 import { authorize } from "../../middleware/authorize.middleware";
-import { BoardRole } from "../../../generated/prisma/enums";
+import { memberController } from "./member.controller";
 
 const router: Router = Router();
-
 router.post(
   "/create/:boardId",
   authenticate,
-  authorize(BoardRole.ADMIN, BoardRole.MEMBER),
-  columnController.createColumn,
+  authorize("ADMIN"),
+  memberController.createMember,
 );
 
-export const columnRoutes = router;
+export const MemberRoute = router;

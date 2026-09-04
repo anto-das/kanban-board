@@ -6,7 +6,6 @@ import { sendResponse } from "../../shared/sendResponse";
 const createBoard = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
   const userId = req.user?.id;
-  console.log("Payload received in boardController:", userId, payload);
   const result = await boardService.createBoard({
     ...payload,
     ownerId: userId,
@@ -21,8 +20,8 @@ const createBoard = catchAsync(async (req: Request, res: Response) => {
 
 const getBoardInfo = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.id as string;
-  const boardId = req.params.boardId as string;
-  const result = await boardService.getBoardInfo(userId, boardId);
+  const { boardId } = req.params;
+  const result = await boardService.getBoardInfo(userId, boardId as string);
   sendResponse(res, {
     httpStatusCode: 200,
     success: true,

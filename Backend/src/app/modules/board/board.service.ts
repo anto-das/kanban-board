@@ -4,8 +4,22 @@ import { prisma } from "../../lib/prisma";
 const createBoard = async (
   payload: Omit<Board, "id" | "createdAt" | "updatedAt">,
 ) => {
-  const result = await prisma.board.create({
-    data: payload,
+  const result = await prisma.$transaction(async (tx) => {
+    const board = await tx.board.create({
+      data: payload,
+    });
+    if (!board) {
+      throw new Error("Board not created something went wrong..");
+    }
+    // const user = await tx.user.update({
+    //   where: {
+    //     id: payload.ownerId,
+    //   },
+    //   data: {
+    //     role: "ADMIN",
+    //   },
+    // });
+    return board;
   });
 
   return result;
@@ -14,37 +28,27 @@ const createBoard = async (
 const getBoardInfo = async (userId: string, boardId: string) => {
   const result = await prisma.board.findFirst({
     where: {
-      id: boardId,
-      OR: [
-        { ownerId: userId },
-        {
-          members: {
-            some: {
-              userId,
-            },
-          },
+    id: boardId,
+    OR: [
+      { ownerId: userId },
+      {
+        members: {
+          some: { userId },
         },
-      ],
-    },
-    include: {
-      columns: {
-        include: {
-          tasks: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              status: true,
-              position: true,
-              assigneeId: true,
-            },
-            orderBy: {
-              position: "asc",
-            },
+      },
+    ],
+  },
+  include: {
+    columns: {
+      include: {
+        tasks: {
+          orderBy: {
+            position: "asc",
           },
         },
       },
     },
+  },
   });
   return result;
 };
