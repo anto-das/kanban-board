@@ -1,0 +1,19 @@
+model Member {
+    id         String   @id @default(uuid())
+    boardId    String
+    board      Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    userId     String
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    memberRole UserRole @default(MEMBER)
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+
+    @@index([boardId], name: "board_index")
+    @@index([userId], name: "user_index")
+}
+
+enum UserRole {
+    ADMIN
+    MEMBER
+    VIEWER
+}

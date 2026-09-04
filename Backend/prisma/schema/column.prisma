@@ -1,0 +1,9 @@
+model Column {
+    id        String   @id @default(uuid())
+    title      String
+    boardId   String
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+    tasks     Task[]
+}
