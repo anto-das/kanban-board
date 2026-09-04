@@ -18,7 +18,6 @@ const moveTask = catchAsync(async (req: Request, res: Response) => {
   const taskId = req.body.taskId;
   const targetedColumnId = req.body.columnId;
   const targetedPosition = Number(req.body.position);
-  console.log({ targetedColumnId, targetedPosition });
   const result = await taskService.moveTask(
     taskId,
     targetedColumnId,
@@ -32,7 +31,30 @@ const moveTask = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateTask = catchAsync(async (req: Request, res: Response) => {
+  const body = req.body;
+  const result = await taskService.updatedTask(body);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Task updated successfully..",
+    data: result,
+  });
+});
+const deleteTask = catchAsync(async (req: Request, res: Response) => {
+  const taskId = req.query.taskId as string;
+  const result = await taskService.deleteTask(taskId);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Delete successfully.",
+    data: result,
+  });
+});
+
 export const taskController = {
   createTask,
   moveTask,
+  updateTask,
+  deleteTask,
 };

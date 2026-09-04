@@ -110,7 +110,30 @@ const moveTask = async (
   return result;
 };
 
+const updatedTask = async (payload: any) => {
+  const result = await prisma.task.update({
+    where: {
+      id: payload.id,
+    },
+    data: {
+      ...payload,
+    },
+  });
+  return result;
+};
+
+const deleteTask = async (taskId: string) => {
+  const result = await prisma.task.delete({
+    where: {
+      id: taskId,
+    },
+  });
+  return result;
+};
+
 export const taskService = {
   createTask,
-  moveTask
+  moveTask,
+  updatedTask,
+  deleteTask,
 };

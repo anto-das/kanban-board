@@ -13,10 +13,23 @@ router.post(
   taskController.createTask,
 );
 router.patch(
-  "/update/:boardId",
+  "/move/:boardId",
   authenticate,
   authorize(BoardRole.MEMBER, BoardRole.ADMIN),
   taskController.moveTask,
+);
+router.patch(
+  "/updateTask/:boardId",
+  authenticate,
+  authorize(BoardRole.ADMIN),
+  taskController.updateTask,
+);
+
+router.delete(
+  "/delete/:boardId",
+  authenticate,
+  authorize("ADMIN"),
+  taskController.deleteTask,
 );
 
 export const taskRouter = router;
