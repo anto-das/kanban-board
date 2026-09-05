@@ -80,8 +80,37 @@ const getBoardInfo = async (userId: string, boardId: string) => {
   return result;
 };
 
+const updateBoard = async (
+  payload: Omit<Board, "ownerId" | "createdAt" | "updatedAt">,
+) => {
+  const result = await prisma.board.update({
+    where: {
+      id: payload.id,
+    },
+    data: payload,
+  });
+  return result;
+};
+const deleteBoard = async (boardId: string) => {
+  const result = await prisma.board.delete({
+    where: {
+      id: boardId,
+    },
+    select: {
+      id: true,
+      ownerId: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+  return result;
+};
+
 export const boardService = {
   createBoard,
   getAllBoard,
   getBoardInfo,
+  updateBoard,
+  deleteBoard,
 };

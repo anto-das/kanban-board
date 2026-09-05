@@ -11,4 +11,18 @@ router.post(
   memberController.createMember,
 );
 
+router.patch(
+  "/update/:boardId",
+  authenticate,
+  authorize("ADMIN"),
+  memberController.updateMember,
+);
+
+router.delete(
+  "/delete/:boardId",
+  authenticate,
+  authorize("ADMIN"),
+  memberController.deleteMember,
+);
+
 export const MemberRoute = router;

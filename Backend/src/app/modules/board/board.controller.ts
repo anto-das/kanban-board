@@ -41,8 +41,32 @@ const getBoardInfo = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateBoard = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.boardId as string;
+  const body = req.body;
+  const result = await boardService.updateBoard({ ...body, id: id });
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Updated board success fully..",
+    data: result,
+  });
+});
+const deleteBoard = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.boardId as string;
+  const result = await boardService.deleteBoard(id);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Deleted board success fully..",
+    data: result,
+  });
+});
+
 export const boardController = {
   createBoard,
   getBoardInfo,
   getAllBoard,
+  updateBoard,
+  deleteBoard,
 };
