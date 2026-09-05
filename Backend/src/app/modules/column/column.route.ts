@@ -13,4 +13,17 @@ router.post(
   columnController.createColumn,
 );
 
+router.patch(
+  "/update/:boardId",
+  authenticate,
+  authorize("ADMIN", "MEMBER"),
+  columnController.updateColumn,
+);
+router.delete(
+  "/delete/:boardId",
+  authenticate,
+  authorize("ADMIN", "MEMBER"),
+  columnController.deleteColumn,
+);
+
 export const columnRoutes = router;

@@ -7,7 +7,11 @@ import { BoardRole } from "../../../generated/prisma/enums";
 const router: Router = Router();
 
 router.post("/create", authenticate, boardController.createBoard);
-
+router.get(
+  "/get",
+  authenticate,
+  boardController.getAllBoard,
+);
 router.get(
   "/get/:boardId",
   authenticate,

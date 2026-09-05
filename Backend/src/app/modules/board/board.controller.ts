@@ -18,6 +18,17 @@ const createBoard = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllBoard = catchAsync(async (req: Request, res: Response) => {
+  const id = req.user?.id as string;
+  const result = await boardService.getAllBoard(id);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Retrieved all boards successfully..",
+    data: result,
+  });
+});
+
 const getBoardInfo = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.id as string;
   const { boardId } = req.params;
@@ -33,4 +44,5 @@ const getBoardInfo = catchAsync(async (req: Request, res: Response) => {
 export const boardController = {
   createBoard,
   getBoardInfo,
+  getAllBoard,
 };

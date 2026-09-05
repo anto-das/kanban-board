@@ -18,6 +18,30 @@ const createColumn = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateColumn = catchAsync(async (req: Request, res: Response) => {
+  const param = req.query.columnId as string;
+  const title = req.body.title as string;
+  const result = await columnService.updateColumn(param, title);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "update column successfully",
+    data: result,
+  });
+});
+const deleteColumn = catchAsync(async (req: Request, res: Response) => {
+  const param = req.query.columnId as string;
+  const result = await columnService.deleteColumn(param);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "update column successfully",
+    data: result,
+  });
+});
+
 export const columnController = {
   createColumn,
+  updateColumn,
+  deleteColumn
 };
