@@ -26,7 +26,14 @@ const createUser = async (payload: userInfo) => {
       password: hashedPassword,
     },
   });
-  return result;
+  const { id, name: userName, email: loginUserEmail } = result;
+  const token = jwt.sign({ id, userName, loginUserEmail }, env.JWT_SECRET, {
+    expiresIn: "8h",
+  });
+  return {
+    user: result,
+    token,
+  };
 };
 
 const loginUser = async (payload: Omit<userInfo, "name">) => {
@@ -36,7 +43,7 @@ const loginUser = async (payload: Omit<userInfo, "name">) => {
   }
   const findUser = await prisma.user.findUnique({
     where: {
-      email,
+      email: email,
     },
   });
   if (!findUser) {
@@ -46,11 +53,11 @@ const loginUser = async (payload: Omit<userInfo, "name">) => {
   if (!isMatch) {
     throw new Error("Invalid email or password");
   }
-  const { id, name, email: loginUser } = findUser;
-  const token = jwt.sign({ id, name, loginUser }, env.JWT_SECRET, {
+  const { id, name, email: loginUserEmail } = findUser;
+  const token = jwt.sign({ id, name, loginUserEmail }, env.JWT_SECRET, {
     expiresIn: "8h",
   });
-  return { ...findUser, token };
+  return { user: findUser, token };
 };
 
 export const authService = {

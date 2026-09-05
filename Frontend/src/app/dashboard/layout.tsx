@@ -3,7 +3,7 @@
 import DashboardSidebar from "@/src/component/ui/dashboardSidebar";
 import Logo from "@/src/component/ui/logo";
 import SidebarFooter from "@/src/component/ui/sidebarFooter";
-import { FilePlus, FolderPlus, UserPlus } from "lucide-react";
+import { FolderPlus, UserPlus } from "lucide-react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
