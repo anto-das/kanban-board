@@ -12,3 +12,6 @@ export const login = async (payload: Omit<IUser, "name">) => {
 export const logout = async () => {
   return await authService.logout();
 };
+export const getUser = async () => {
+  return await authService.getUser();
+};

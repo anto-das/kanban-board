@@ -1,6 +1,6 @@
 "use server";
 
-import { memberService } from "@/src/service/boardMember";
+import { memberService } from "@/src/service/member.service";
 
 export const addMember = async (payload: {
   boardId: string;

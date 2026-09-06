@@ -63,7 +63,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         >
           <div className="space-y-6">
             {/* Logo */}
-            <Link href={"/"} className="flex items-center gap-2 px-2">
+            <Link href={""} className="flex items-center gap-2 px-2">
               <Logo />
             </Link>
 

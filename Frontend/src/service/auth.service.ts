@@ -74,7 +74,6 @@ export const authService = {
   getUser: async () => {
     try {
       const res = await httpClient.get("/auth/get");
-      console.log(res);
       return res;
     } catch (err) {
       return handleServerError(err);
