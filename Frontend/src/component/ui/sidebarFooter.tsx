@@ -1,9 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { logout } from "@/src/app/actions/auth.action";
+import { toast } from "sonner";
 
 const SidebarFooter = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isDarkMode = false;
+  const handleLogout = async () => {
+    const loadingId = toast.loading("log out...");
+    try {
+      const res = await logout();
+      window.location.href = "/";
+
+      toast.success("logout successfully", { id: loadingId });
+    } catch (e: any) {
+      toast.error(e.message, { id: loadingId });
+    }
+  };
   return (
     <div className="space-y-2">
       <div
@@ -22,7 +34,7 @@ const SidebarFooter = () => {
 
       {/* 🚪 Explicit Logout Button Trigger */}
       <button
-        // onClick={handleLogout}
+        onClick={handleLogout}
         className="w-full text-center text-xs font-semibold py-2 rounded-lg border border-rose-500/20 text-rose-500 bg-rose-500/5 hover:bg-rose-500/10 transition-colors"
       >
         Logout From Account

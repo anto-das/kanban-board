@@ -9,10 +9,7 @@ const MyBoard = ({
   board: Board;
   isDarkMode?: boolean;
 }) => {
-  // মেম্বার লিস্ট থেকে কারেন্ট ইউজারের রোল বের করা (আপাতত প্রথম মেম্বারের রোল ডিফাইন করা হলো নিরাপদ উপায়ে)
   const userRole = board.members?.[0]?.memberRole || "ADMIN";
-
-  // রোল অনুযায়ী ডাইনামিক স্টাইল এবং আইকন নির্ধারণ
   const getRoleConfig = (role: string) => {
     switch (role) {
       case "ADMIN":
@@ -43,7 +40,6 @@ const MyBoard = ({
   };
 
   const roleConfig = getRoleConfig(userRole);
-
   return (
     <div
       className={`p-6 rounded-2xl border shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between h-44 group ${

@@ -3,7 +3,7 @@ export interface Task {
   columnId: string;
   title: string;
   description: string;
-  status: 'TODO' | 'IN_PROGRESS' | 'DONE' | string; // আপনার ডাটাতে মূলত "TODO" স্ট্যাটাস আছে
+  status: string;
   position: number;
   assigneeId: string | null;
   createdAt: string; // ISO Date String

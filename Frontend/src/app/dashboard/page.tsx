@@ -1,10 +1,14 @@
 import Dashboard from "@/src/component/modules/dashboard/dashboardPage";
 import React from "react";
 
-const page = () => {
+type PageProps = {
+  searchParams: Promise<{ boardModal: string }>;
+};
+
+const page = async ({ searchParams }: PageProps) => {
   return (
     <div>
-      <Dashboard />
+      <Dashboard searchParams={searchParams} />
     </div>
   );
 };

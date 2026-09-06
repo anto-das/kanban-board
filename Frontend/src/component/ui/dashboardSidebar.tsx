@@ -11,11 +11,11 @@ const DashboardSidebar = () => {
   const pathname = usePathname(); // কারেন্ট URL এর পাথ ট্র্যাক করার জন্য
 
   const boardId = params.boardId;
-  console.log(boardId);
 
   // ডাইনামিক অ্যাক্টিভ স্টেট চেক করার কন্ডিশন
   const isDashboardActive = pathname === "/dashboard";
-  const isBoardActive = pathname.startsWith("/board/") || pathname === "/";
+  const isBoardActive =
+    pathname.startsWith(`/board/${boardId}`) || pathname === "/";
 
   return (
     <div
@@ -36,23 +36,9 @@ const DashboardSidebar = () => {
           📊 Dashboard
         </Link>
 
-        {/* 📋 My Board Link (Dynamic Routing Handle) */}
-        <Link
-          href={boardId ? `/dashboard/board/${boardId}` : "/"}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-            isBoardActive
-              ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/10"
-              : isDarkMode
-                ? "text-slate-400 hover:bg-slate-800 hover:text-white"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-          }`}
-        >
-          📋 My Board
-        </Link>
-
         {/* ➕ Add New Board Action Trigger */}
-        <button
-          // onClick={handleCreateBoard}
+        <Link
+          href={`/dashboard?boardModal=true`}
           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
             isDarkMode
               ? "text-emerald-400 hover:bg-emerald-950/30"
@@ -60,9 +46,8 @@ const DashboardSidebar = () => {
           }`}
         >
           ➕ Add New Board
-        </button>
+        </Link>
       </nav>
-      
     </div>
   );
 };

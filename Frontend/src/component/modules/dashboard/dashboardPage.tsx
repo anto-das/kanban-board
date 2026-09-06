@@ -1,259 +1,50 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Logo from "@/src/component/ui/logo";
-
-import DashboardSidebar from "@/src/component/ui/dashboardSidebar";
-import SidebarFooter from "@/src/component/ui/sidebarFooter";
+import { boardService } from "@/src/service/board.service";
 import MyBoard from "./myBoard";
 import { Board } from "@/src/types/board.type";
+import Link from "next/link";
+import CreateBoardDialog from "../../ui/createBoardModal";
 
 // import Cookies from "js-cookie";
 
-export default function Dashboard() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [boards, setBoards] = useState<Board[]>([
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-    {
-      id: "e9fc69fb-06a9-49e6-8c33-d17eabf3e046",
-      name: "Project Apollo Dashboard",
-      ownerId: "77782680-1b1c-4bb6-9a2d-c08a9066ea80",
-      createdAt: "2026-09-04T08:02:07.357Z",
-      updatedAt: "2026-09-04T08:02:07.357Z",
-      _count: {
-        columns: 4,
-      },
-      members: [
-        // {
-        //   memberRole: "ADMIN",
-        // },
-        {
-          memberRole: "MEMBER",
-        },
-        // {
-        //   memberRole: "VIEWER",
-        // },
-      ],
-    },
-  ]);
+export default async function Dashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    boardModal: string;
+  }>;
+}) {
+  const query = await searchParams;
+  const isColumnModalOpen = query.boardModal === "true";
 
-  const router = useRouter();
-
-  // 🚪 Handle User Logout Action
-  //   const handleLogout = () => {
-  //     Cookies.remove("token");
-  //     Cookies.remove("user");
-  //     alert("Logged out successfully!");
-  //     router.push("/login");
-  //   };
-
-  // ➕ Handle Adding a New Board
-  //   const handleCreateBoard = () => {
-  //     const boardName = prompt("Enter new board name:");
-  //     if (boardName && boardName.trim() !== "") {
-  //       setBoards([
-  //         boards,
-  //         { id: Date.now(), name: boardName.trim(), taskCount: 0 },
-  //       ]);
-  //     }
-  //   };
+  const isDarkMode = false;
+  const res = await boardService.getAllBoard();
+  const boards: Board[] =
+    "data" in res && Array.isArray(res.data) ? res.data : [];
 
   return (
     <main className="p-6 space-y-6">
       <div>
         <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">
-          Your Active Boards ({boards.length})
+          Your Active Boards ({boards?.length})
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Loop through created boards */}
-          {boards.map((board: Board, index) => (
-            <MyBoard key={index} board={board} />
+          {boards?.map((board: Board) => (
+            <MyBoard key={board.id} board={board} isDarkMode={false} />
           ))}
 
           {/* Dotted "Add New Board" Placeholder Box */}
-          <div
-            // onClick={handleCreateBoard}
-            className={`h-40 rounded-xl border border-dashed flex flex-col items-center justify-center transition-all cursor-pointer group ${
-              isDarkMode
-                ? "border-slate-800 hover:bg-slate-800/40 hover:border-slate-700"
-                : "border-slate-300 hover:bg-slate-100 hover:border-slate-400"
-            }`}
-          >
-            <span className="text-xl text-slate-400 group-hover:text-indigo-500 transition-colors">
-              ＋
-            </span>
-            <p className="text-xs font-semibold text-slate-400 group-hover:text-indigo-500 transition-colors mt-1">
-              Add New Board
-            </p>
+          <div>
+            <Link
+              href={`/dashboard?boardModal=true`}
+              className="w-full py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed transition-all duration-300 shadow-sm bg-white text-indigo-600 border-slate-200/80 hover:text-indigo-500 hover:bg-indigo-50/50 hover:border-indigo-300/80"
+            >
+              <span className="text-sm font-bold">＋</span> Add New Task
+            </Link>
+
+            {isColumnModalOpen && (
+              <CreateBoardDialog isOpen={isColumnModalOpen} />
+            )}
           </div>
         </div>
       </div>
