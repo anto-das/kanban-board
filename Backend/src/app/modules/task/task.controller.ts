@@ -18,6 +18,7 @@ const moveTask = catchAsync(async (req: Request, res: Response) => {
   const taskId = req.body.taskId;
   const targetedColumnId = req.body.columnId;
   const targetedPosition = Number(req.body.position);
+  console.log(targetedColumnId)
   const result = await taskService.moveTask(
     taskId,
     targetedColumnId,

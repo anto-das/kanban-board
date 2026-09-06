@@ -43,4 +43,25 @@ export const taskService = {
       return handleServerError(err);
     }
   },
+  moveTask: async (payload: {
+    taskId: string;
+    boardId: string;
+    targetedColumnId: string;
+    targetedPosition: number;
+  }) => {
+    const { boardId, taskId, targetedColumnId, targetedPosition } = payload;
+    try {
+      const res: ApiResponse<ITask> = await httpClient.patch(
+        `/task/move/${boardId}`,
+        {
+          taskId: taskId,
+          columnId: targetedColumnId,
+          position: targetedPosition,
+        },
+      );
+      return res;
+    } catch (err) {
+      return handleServerError(err);
+    }
+  },
 };

@@ -11,3 +11,12 @@ export const createTask = async (payload: {
 }) => {
   return taskService.createTask(payload);
 };
+
+export const moveTask = async (payload: {
+  taskId: string;
+  targetedColumnId: string;
+  targetedPosition: number;
+  boardId: string;
+}) => {
+  return taskService.moveTask(payload);
+};
