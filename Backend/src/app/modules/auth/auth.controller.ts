@@ -46,8 +46,20 @@ const logout = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getUser = catchAsync(async (req: Request, res: Response) => {
+  const email = req.user?.loginUserEmail as string;
+  const result = await authService.getUser(email);
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: "Retrieved User Successfully.",
+    data: result,
+  });
+});
+
 export const authController = {
   createUser,
   loginUser,
   logout,
+  getUser,
 };

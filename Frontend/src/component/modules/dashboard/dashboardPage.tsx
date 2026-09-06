@@ -39,7 +39,7 @@ export default async function Dashboard({
               href={`/dashboard?boardModal=true`}
               className="w-full py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed transition-all duration-300 shadow-sm bg-white text-indigo-600 border-slate-200/80 hover:text-indigo-500 hover:bg-indigo-50/50 hover:border-indigo-300/80"
             >
-              <span className="text-sm font-bold">＋</span> Add New Task
+              <span className="text-sm font-bold">＋</span> Add New Board
             </Link>
 
             {isColumnModalOpen && (

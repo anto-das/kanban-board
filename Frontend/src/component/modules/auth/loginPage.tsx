@@ -30,7 +30,11 @@ export default function LoginPage() {
       const loadingId = toast.loading("Registering...");
       try {
         const { data } = await login(value);
-        toast.success(`Welcome ${data?.user.name}`, { id: loadingId });
+        if (data?.token) {
+          toast.success(`Welcome ${data?.user.name}`, { id: loadingId });
+        } else {
+          toast.error(`Please sign up or sign in again.!`, { id: loadingId });
+        }
         window.location.href = "/dashboard";
       } catch (error: any) {
         toast.error(error.message, { id: loadingId });

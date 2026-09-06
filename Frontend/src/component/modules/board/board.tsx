@@ -224,7 +224,7 @@ const Board = ({
         items={columns.map((column: any) => String(column.id))}
         strategy={horizontalListSortingStrategy}
       >
-        <div className="flex gap-5 items-start w-max min-w-full">
+        <div className="flex gap-5 items-start overflow-auto max-w-7xl ">
           {columns.map((column: any) => (
             <Column
               key={column.id}

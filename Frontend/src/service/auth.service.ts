@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { httpClient } from "../lib/axios/httpClient";
 import { AuthApiResponse, IUser } from "../types/authResponse.type";
+import { handleServerError } from "../lib/utils";
 
 export const authService = {
   register: async (payload: IUser) => {
@@ -68,6 +69,15 @@ export const authService = {
         error: "Logout Failed!",
         details: error,
       };
+    }
+  },
+  getUser: async () => {
+    try {
+      const res = await httpClient.get("/auth/get");
+      console.log(res);
+      return res;
+    } catch (err) {
+      return handleServerError(err);
     }
   },
 };

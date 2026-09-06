@@ -43,10 +43,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           >
             {isDarkMode ? "☀️ Light" : "🌙 Dark"}
           </button>
-          {isDashboard ? (
-            /* ➕ Create Board Button (Shows on Dashboard) */
+          
             <Link
-              href={"/dashboard?boardModal=true"}
+            href={"/dashboard"}
               // onClick={handleCreateBoard}
               className="bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all duration-200 flex items-center justify-center gap-2 group tracking-wide border border-indigo-500/20"
             >
@@ -54,16 +53,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               <FolderPlus className="w-5" />
               <span>Create Board</span>
             </Link>
-          ) : (
-            <button
-              // onClick={handleShareBoard}
-              className="bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all duration-200 flex items-center justify-center gap-2 group tracking-wide border border-indigo-500/20"
-            >
-              {/* User Plus Icon - Perfect for sharing/inviting members */}
-              <UserPlus className="w-5" />
-              <span>Share Board</span>
-            </button>
-          )}
+         
         </div>
       </header>
       {/* 💾 Sidebar Component */}
@@ -85,7 +75,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <SidebarFooter />
         </aside>
 
-        <div className="w-full overflow-x-scroll">{children}</div>
+        <div className="w-full">{children}</div>
       </div>
     </div>
   );

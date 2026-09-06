@@ -19,7 +19,7 @@ const DashboardSidebar = () => {
 
   return (
     <div
-      className={`flex-1 flex flex-col min-w-0 overflow-y-auto min-h-full p-4 ${isDarkMode ? "bg-[#070A13]" : "bg-white"}`}
+      className={`flex-1 flex flex-col min-w-0 min-h-full p-4 ${isDarkMode ? "bg-[#070A13]" : "bg-white"}`}
     >
       <nav className="space-y-1.5">
         {/* 📊 Dashboard Link */}
