@@ -7,7 +7,6 @@ export const authorize = (...roles: BoardRole[]) => {
     try {
       const userId = req.user?.id;
       const { boardId } = req.params;
-      console.log(req.user)
       if (!userId || !boardId) {
         return res.status(403).json({
           success: false,
