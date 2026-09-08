@@ -13,7 +13,6 @@
     "lint": "eslint ./src/**/*",
     "studio": "prisma studio"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
