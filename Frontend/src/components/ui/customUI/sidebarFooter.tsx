@@ -1,6 +1,6 @@
 "use client";
 
-import { getUser, logout } from "@/src/app/actions/auth.action";
+import { getUser, logout } from "@/app/actions/auth.action";
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

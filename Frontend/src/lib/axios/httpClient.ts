@@ -1,4 +1,4 @@
-import { env } from "@/src/config/env";
+import { env } from "@/config/env";
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { cookies } from "next/headers";

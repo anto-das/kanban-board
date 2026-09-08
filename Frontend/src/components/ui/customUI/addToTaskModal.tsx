@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { createTask } from "@/app/actions/task.action";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -8,19 +9,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { addMember } from "@/src/app/actions/member.action";
-import { Plus } from "lucide-react";
-import { toast } from "sonner";
+} from "../dialog";
+import { Label } from "../label";
+import { Input } from "../input";
+import { Button } from "../button";
 
-interface AddMemberProps {
+interface AddTaskDialogProps {
   isOpen: boolean;
   boardId: string;
+  columnId: string; // কোন কলামে এড হবে তা ট্র্যাক করার জন্য
 }
 
-export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
+export function AddTaskDialog({
+  isOpen,
+  columnId,
+  boardId,
+}: AddTaskDialogProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -28,15 +32,19 @@ export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
 
     const formData = new FormData(form);
 
-    const { userId } = Object.fromEntries(formData.entries());
+    const { title, description, position } = Object.fromEntries(
+      formData.entries(),
+    );
     const payload = {
       boardId: boardId as string,
-      userId: userId as string,
+      columnId: columnId as string,
+      title: title as string,
+      description: description as string,
+      position: Number(position),
     };
-
     const loadingId = toast.loading("Task Added..");
     try {
-      const res: any = await addMember(payload);
+      const res = await createTask(payload);
       if ("success" in res && res.success) {
         toast.success(res.message, { id: loadingId });
         window.location.href = `/dashboard/board/${boardId}`;
@@ -59,10 +67,10 @@ export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
         <form id="submit" className="space-y-4" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
-              Add User
+              Create New Task
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">
-              Add a new member to your workspace pipeline. Fill in the details
+              Add a new task to your workspace pipeline. Fill in the details
               below.
             </DialogDescription>
           </DialogHeader>
@@ -70,16 +78,50 @@ export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
             {/* ১. Task Title Field */}
             <div className="flex flex-col gap-2">
               <Label
-                htmlFor="column-title"
+                htmlFor="task-title"
                 className="text-xs font-bold text-slate-600 uppercase tracking-wider"
               >
-                User *
+                Task Title *
               </Label>
               <Input
-                id="column-title"
-                name="userId"
+                id="task-title"
+                name="title"
                 placeholder="e.g., Integrate Axios Client"
                 required
+                className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
+              />
+            </div>
+
+            {/* ২. Description Field */}
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="task-desc"
+                className="text-xs font-bold text-slate-600 uppercase tracking-wider"
+              >
+                Description
+              </Label>
+              <Input
+                id="task-desc"
+                name="description"
+                placeholder="Briefly describe the task requirements..."
+                className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
+              />
+            </div>
+
+            {/* ৩. Position Field */}
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="task-position"
+                className="text-xs font-bold text-slate-600 uppercase tracking-wider"
+              >
+                Position / Order
+              </Label>
+              <Input
+                id="task-position"
+                name="position"
+                type="number"
+                min="0"
+                placeholder="e.g., 1"
                 className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
               />
             </div>
@@ -100,7 +142,7 @@ export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
               type="submit"
               className="rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md transition-all px-4"
             >
-              Add <Plus />
+              Create Task
             </Button>
           </DialogFooter>
         </form>

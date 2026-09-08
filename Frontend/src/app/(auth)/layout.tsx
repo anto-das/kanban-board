@@ -1,5 +1,5 @@
-import Footer from "@/src/component/ui/footer";
-import Navbar from "@/src/component/ui/navbar";
+import Footer from "@/components/ui/customUI/footer";
+import Navbar from "@/components/ui/customUI/navbar";
 import React from "react";
 
 const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {

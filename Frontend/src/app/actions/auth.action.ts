@@ -1,7 +1,7 @@
 "use server";
 
-import { authService } from "@/src/service/auth.service";
-import { IUser } from "@/src/types/authResponse.type";
+import { authService } from "@/service/auth.service";
+import { IUser } from "@/types/authResponse.type";
 
 export const register = async (payload: IUser) => {
   return await authService.register(payload);

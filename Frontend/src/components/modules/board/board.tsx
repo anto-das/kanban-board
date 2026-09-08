@@ -19,7 +19,7 @@ import { useState } from "react";
 import Column from "./column";
 import Task from "./task";
 import { toast } from "sonner";
-import { moveTask } from "@/src/app/actions/task.action";
+import { moveTask } from "@/app/actions/task.action";
 
 const Board = ({
   initialColumns,

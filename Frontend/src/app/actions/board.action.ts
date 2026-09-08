@@ -1,6 +1,6 @@
 "use server";
 
-import { boardService } from "@/src/service/board.service";
+import { boardService } from "@/service/board.service";
 
 export const createBoard = async (payload: { name: string }) => {
   return await boardService.createBoard(payload);

@@ -1,8 +1,8 @@
-import { boardService } from "@/src/service/board.service";
+import { boardService } from "@/service/board.service";
 import MyBoard from "./myBoard";
-import { Board } from "@/src/types/board.type";
+import { Board } from "@/types/board.type";
 import Link from "next/link";
-import CreateBoardDialog from "../../ui/createBoardModal";
+import CreateBoardDialog from "../../ui/customUI/createBoardModal";
 
 // import Cookies from "js-cookie";
 

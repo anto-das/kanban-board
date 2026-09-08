@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Navbar from "../../ui/navbar";
-import Footer from "../../ui/footer";
+import Navbar from "../../ui/customUI/navbar";
+import Footer from "../../ui/customUI/footer";
 
 export default function HomePage() {
   return (

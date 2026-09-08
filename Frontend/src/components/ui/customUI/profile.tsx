@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
-
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "../tooltip";
 
 const UserProfile = ({ user, isDarkMode }: any) => {
   const [copied, setCopied] = useState(false);
@@ -49,9 +48,7 @@ const UserProfile = ({ user, isDarkMode }: any) => {
 
             {/* User info */}
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold truncate">
-                {user?.name}
-              </p>
+              <p className="text-xs font-semibold truncate">{user?.name}</p>
 
               <p className="text-[10px] text-slate-400 truncate">
                 {user?.email}

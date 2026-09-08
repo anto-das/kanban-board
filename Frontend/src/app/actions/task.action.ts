@@ -1,6 +1,6 @@
 "use server";
 
-import { taskService } from "@/src/service/task.service";
+import { taskService } from "@/service/task.service";
 
 export const createTask = async (payload: {
   boardId: string;

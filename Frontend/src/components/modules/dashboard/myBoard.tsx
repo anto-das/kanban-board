@@ -1,5 +1,5 @@
 "use client";
-import { Board } from "@/src/types/board.type";
+import { Board } from "@/types/board.type";
 import Link from "next/link";
 
 const MyBoard = ({

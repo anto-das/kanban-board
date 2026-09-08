@@ -2,24 +2,28 @@
 import { useState } from "react";
 import Link from "next/link";
 
+import FormLogo from "@/components/ui/customUI/formLogo";
 import z from "zod";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import LoginFormLogo from "@/src/component/ui/loginFormLogo";
-import { useForm } from "@tanstack/react-form";
-import { toast } from "sonner";
-import { login } from "@/src/app/actions/auth.action";
 
-export default function LoginPage() {
+import { useForm } from "@tanstack/react-form";
+
+import { toast } from "sonner";
+import { register } from "@/app/actions/auth.action";
+import { Field, FieldError, FieldLabel } from "../../ui/field";
+import { Input } from "../../ui/input";
+
+export default function RegisterPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const formSchema = z.object({
+    name: z.string().min(5, "Name must be at least 5 characters"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
   });
 
   const form = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -29,13 +33,8 @@ export default function LoginPage() {
     onSubmit: async ({ value }) => {
       const loadingId = toast.loading("Registering...");
       try {
-        const { data } = await login(value);
-        if (data?.token) {
-          toast.success(`Welcome ${data?.user.name}`, { id: loadingId });
-        } else {
-          toast.error(`Please sign up or sign in again.!`, { id: loadingId });
-        }
-        window.location.href = "/dashboard";
+        const { data } = await register(value);
+        toast.success(`Welcome ${data?.user.name}`, { id: loadingId });
       } catch (error: any) {
         toast.error(error.message, { id: loadingId });
       }
@@ -77,7 +76,7 @@ export default function LoginPage() {
         }`}
       >
         {/* Brand Identity & Header */}
-        <LoginFormLogo />
+        <FormLogo />
 
         {/* Input Form Fields */}
         <form
@@ -87,6 +86,35 @@ export default function LoginPage() {
           }}
           className="space-y-4"
         >
+          {/* Full Name */}
+          <form.Field
+            name="name"
+            children={(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel
+                    className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5"
+                    htmlFor={field.name}
+                  >
+                    Name
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                    placeholder="John Doe"
+                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500/20 accent-indigo-600 cursor-pointer"
+                  />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          />
+
           {/* Email Address */}
           <form.Field
             name="email"
@@ -152,7 +180,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all duration-200 mt-2"
           >
-            Sign In
+            Create Free Account
           </button>
         </form>
 
@@ -201,12 +229,12 @@ export default function LoginPage() {
         </button>
 
         <p className="text-center text-[11px] text-slate-400 mt-6">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/register"
+            href="/login"
             className="font-semibold text-indigo-500 transition-colors hover:text-indigo-400"
           >
-            Register
+            Sign in
           </Link>
         </p>
       </div>

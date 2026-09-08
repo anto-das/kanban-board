@@ -1,4 +1,4 @@
-import Dashboard from "@/src/component/modules/dashboard/dashboardPage";
+import Dashboard from "@/components/modules/dashboard/dashboardPage";
 import React from "react";
 
 type PageProps = {

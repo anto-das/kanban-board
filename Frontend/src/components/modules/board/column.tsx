@@ -12,8 +12,8 @@ import {
 
 import { CSS } from "@dnd-kit/utilities";
 
-import { UpdateColumnModal } from "../../ui/updateColumnModal";
-import { AddTaskDialog } from "../../ui/addToTaskModal";
+import { UpdateColumnModal } from "../../ui/customUI/updateColumnModal";
+import { AddTaskDialog } from "../../ui/customUI/addToTaskModal";
 import Task from "./task";
 
 const Column = ({
@@ -56,10 +56,12 @@ const Column = ({
       ref={setNodeRef}
       style={style}
       className={`w-72 min-w-72 max-w-72 shrink-0 h-[calc(100vh-250px)] flex flex-col p-4 rounded-2xl border shadow-xl ${isDragging ? "opacity-50 rotate-2 scale-[1.02] shadow-2xl z-50" : ""} ${
-          isDarkMode
-            ? "bg-[#0E1322]/80 border-slate-800/40"
-            : "bg-slate-100/60 border-slate-200/50"
-        }`} {...attributes}  >
+        isDarkMode
+          ? "bg-[#0E1322]/80 border-slate-800/40"
+          : "bg-slate-100/60 border-slate-200/50"
+      }`}
+      {...attributes}
+    >
       {/* ================================= */}
       {/* COLUMN HEADER */}
       {/* ================================= */}
@@ -160,7 +162,8 @@ const Column = ({
         <Link
           href={`/dashboard/board/${boardId}?modal=true&columnId=${column.id}`}
           className=" w-full py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed transition-all duration-300 shadow-sm bg-white text-indigo-600 border-slate-200/80 hover:text-indigo-500 hover:bg-indigo-50/50 hover:border-indigo-300/80
-          ">
+          "
+        >
           <span className="text-sm font-bold">＋</span>
           Add New Task
         </Link>

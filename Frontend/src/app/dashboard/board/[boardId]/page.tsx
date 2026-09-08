@@ -1,9 +1,8 @@
-import Board from "@/src/component/modules/board/board";
-import Column from "@/src/component/modules/board/column";
-import { AddBoardMemberModal } from "@/src/component/ui/addBoardMember";
-import { AddColumnModal } from "@/src/component/ui/addColumnModal";
+import Board from "@/components/modules/board/board";
+import { AddBoardMemberModal } from "@/components/ui/customUI/addBoardMember";
+import { AddColumnModal } from "@/components/ui/customUI/addColumnModal";
 
-import { boardService } from "@/src/service/board.service";
+import { boardService } from "@/service/board.service";
 import { UserPlus } from "lucide-react";
 
 import Link from "next/link";

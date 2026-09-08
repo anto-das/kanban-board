@@ -1,6 +1,6 @@
 "use server";
 
-import { columnService } from "@/src/service/column.service";
+import { columnService } from "@/service/column.service";
 
 export const createColumn = async (payload: {
   boardId: string;

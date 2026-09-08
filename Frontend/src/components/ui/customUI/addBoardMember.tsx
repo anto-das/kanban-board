@@ -1,6 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { addMember } from "@/app/actions/member.action";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -8,24 +10,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createTask } from "@/src/app/actions/task.action";
-import { ApiResponse, ITask } from "@/src/service/task.service";
-import { toast } from "sonner";
+} from "../dialog";
+import { Label } from "../label";
+import { Input } from "../input";
+import { Button } from "../button";
 
-interface AddTaskDialogProps {
+interface AddMemberProps {
   isOpen: boolean;
   boardId: string;
-  columnId: string; // কোন কলামে এড হবে তা ট্র্যাক করার জন্য
 }
 
-export function AddTaskDialog({
-  isOpen,
-  columnId,
-  boardId,
-}: AddTaskDialogProps) {
+export function AddBoardMemberModal({ isOpen, boardId }: AddMemberProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -33,19 +28,15 @@ export function AddTaskDialog({
 
     const formData = new FormData(form);
 
-    const { title, description, position } = Object.fromEntries(
-      formData.entries(),
-    );
+    const { userId } = Object.fromEntries(formData.entries());
     const payload = {
       boardId: boardId as string,
-      columnId: columnId as string,
-      title: title as string,
-      description: description as string,
-      position: Number(position),
+      userId: userId as string,
     };
+
     const loadingId = toast.loading("Task Added..");
     try {
-      const res = await createTask(payload);
+      const res: any = await addMember(payload);
       if ("success" in res && res.success) {
         toast.success(res.message, { id: loadingId });
         window.location.href = `/dashboard/board/${boardId}`;
@@ -68,10 +59,10 @@ export function AddTaskDialog({
         <form id="submit" className="space-y-4" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
-              Create New Task
+              Add User
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">
-              Add a new task to your workspace pipeline. Fill in the details
+              Add a new member to your workspace pipeline. Fill in the details
               below.
             </DialogDescription>
           </DialogHeader>
@@ -79,50 +70,16 @@ export function AddTaskDialog({
             {/* ১. Task Title Field */}
             <div className="flex flex-col gap-2">
               <Label
-                htmlFor="task-title"
+                htmlFor="column-title"
                 className="text-xs font-bold text-slate-600 uppercase tracking-wider"
               >
-                Task Title *
+                User *
               </Label>
               <Input
-                id="task-title"
-                name="title"
+                id="column-title"
+                name="userId"
                 placeholder="e.g., Integrate Axios Client"
                 required
-                className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
-              />
-            </div>
-
-            {/* ২. Description Field */}
-            <div className="flex flex-col gap-2">
-              <Label
-                htmlFor="task-desc"
-                className="text-xs font-bold text-slate-600 uppercase tracking-wider"
-              >
-                Description
-              </Label>
-              <Input
-                id="task-desc"
-                name="description"
-                placeholder="Briefly describe the task requirements..."
-                className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
-              />
-            </div>
-
-            {/* ৩. Position Field */}
-            <div className="flex flex-col gap-2">
-              <Label
-                htmlFor="task-position"
-                className="text-xs font-bold text-slate-600 uppercase tracking-wider"
-              >
-                Position / Order
-              </Label>
-              <Input
-                id="task-position"
-                name="position"
-                type="number"
-                min="0"
-                placeholder="e.g., 1"
                 className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
               />
             </div>
@@ -143,7 +100,7 @@ export function AddTaskDialog({
               type="submit"
               className="rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md transition-all px-4"
             >
-              Create Task
+              Add <Plus />
             </Button>
           </DialogFooter>
         </form>

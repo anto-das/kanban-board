@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { createBoard } from "@/app/actions/board.action";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -8,20 +9,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createColumn } from "@/src/app/actions/column.action";
-import { createTask } from "@/src/app/actions/task.action";
-import { ApiResponse, ITask } from "@/src/service/task.service";
-import { toast } from "sonner";
+} from "../dialog";
+import { Label } from "../label";
+import { Input } from "../input";
+import { Button } from "../button";
 
-interface AddColumnProps {
+interface CreateBoardDialogProps {
   isOpen: boolean;
-  boardId: string;
+  // boardId: string;
+  // columnId: string; // কোন কলামে এড হবে তা ট্র্যাক করার জন্য
 }
 
-export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
+export default function CreateBoardDialog({ isOpen }: CreateBoardDialogProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -29,21 +28,24 @@ export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
 
     const formData = new FormData(form);
 
-    const { title } = Object.fromEntries(formData.entries());
+    const { name } = Object.fromEntries(formData.entries());
     const payload = {
-      boardId: boardId as string,
-      title: title as string,
+      name: name as string,
     };
     console.log(payload);
     const loadingId = toast.loading("Task Added..");
     try {
-      const res: any = await createColumn(payload);
-      console.log(res)
-      if ("success" in res && res.success) {
-        toast.success(res.message, { id: loadingId });
-        window.location.href = `/dashboard/board/${boardId}`;
+      const res = await createBoard(payload);
+      const result = res as { success?: unknown; message?: unknown };
+      if (result.success === true) {
+        toast.success(String(result.message ?? "Board created successfully"), {
+          id: loadingId,
+        });
+        window.location.href = `/dashboard`;
       } else {
-        toast.error(res.message, { id: loadingId });
+        toast.error(String(result.message ?? "Failed to create board"), {
+          id: loadingId,
+        });
       }
     } catch (err: any) {
       toast.error(err.message, { id: loadingId });
@@ -53,15 +55,13 @@ export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
   return (
     <Dialog
       open={isOpen}
-      onOpenChange={() =>
-        (window.location.href = `/dashboard/board/${boardId}`)
-      }
+      onOpenChange={() => (window.location.href = `/dashboard`)}
     >
       <DialogContent className="sm:max-w-md bg-white border border-slate-200 rounded-2xl shadow-2xl">
         <form id="submit" className="space-y-4" onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
-              Create New Column
+              Create New Task
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">
               Add a new task to your workspace pipeline. Fill in the details
@@ -72,14 +72,14 @@ export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
             {/* ১. Task Title Field */}
             <div className="flex flex-col gap-2">
               <Label
-                htmlFor="column-title"
+                htmlFor="task-title"
                 className="text-xs font-bold text-slate-600 uppercase tracking-wider"
               >
-                Column Title *
+                Board Name*
               </Label>
               <Input
-                id="column-title"
-                name="title"
+                id="task-title"
+                name="name"
                 placeholder="e.g., Integrate Axios Client"
                 required
                 className="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-transparent"
@@ -91,9 +91,7 @@ export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
             <Button
               type="button"
               variant="outline"
-              onClick={() =>
-                (window.location.href = `/dashboard/board/${boardId}`)
-              }
+              onClick={() => (window.location.href = `/dashboard`)}
               className="rounded-xl text-xs font-semibold px-4 border-slate-200 hover:bg-slate-50 text-slate-600"
             >
               Cancel
@@ -102,7 +100,7 @@ export function AddColumnModal({ isOpen, boardId }: AddColumnProps) {
               type="submit"
               className="rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md transition-all px-4"
             >
-              Create Column
+              Create Task
             </Button>
           </DialogFooter>
         </form>

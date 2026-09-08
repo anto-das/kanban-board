@@ -1,1 +1,1 @@
-export type * from "@/src/types/authResponse.type";
+export type * from "@/types/authResponse.type";

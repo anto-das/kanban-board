@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { updateColumn } from "@/app/actions/column.action";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createColumn, updateColumn } from "@/src/app/actions/column.action";
-
-import { toast } from "sonner";
+} from "../dialog";
+import { Label } from "../label";
+import { Input } from "../input";
+import { Button } from "../button";
 
 interface UpdateColumnProps {
   isOpen: boolean;
