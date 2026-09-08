@@ -18,8 +18,7 @@ const createUser = async (payload: userInfo) => {
     },
   });
   if (findUser) {
-    return { error: "User already exists" };
-    // throw new Error("User already exists");
+    throw new Error("User already exists");
   }
   const result = await prisma.user.create({
     data: {
