@@ -10,7 +10,8 @@ const cookieOptions = {
 };
 
 const createUser = catchAsync(async (req: Request, res: Response) => {
-  const { user, token } = await authService.createUser(req.body);
+  console.log(req.body)
+  const { user, token, } = await authService.createUser(req.body);
   res.cookie("task_orbit_token", token, cookieOptions);
   sendResponse(res, {
     httpStatusCode: 201,

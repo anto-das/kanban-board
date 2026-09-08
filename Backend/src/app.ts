@@ -9,7 +9,7 @@ export const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: [env.APP_URL || "http://localhost:3000"],
+    origin: [env.APP_URL, "http://localhost:3000"],
     credentials: true,
   }),
 );
