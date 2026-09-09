@@ -20,3 +20,11 @@ export const moveTask = async (payload: {
 }) => {
   return taskService.moveTask(payload);
 };
+
+export const updateTask = async (payload: {
+  boardId: string;
+  id: string;
+  assigneeId: string;
+}) => {
+  return taskService.updateTask(payload);
+};

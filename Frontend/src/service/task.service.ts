@@ -64,4 +64,19 @@ export const taskService = {
       return handleServerError(err);
     }
   },
+  updateTask: async (payload: {
+    boardId: string;
+    id: string;
+    assigneeId: string;
+  }) => {
+    try {
+      const res = await httpClient.patch(`/updateTask/${payload.boardId}`, {
+        id: payload.id,
+        assigneeId: payload.assigneeId,
+      });
+      return res;
+    } catch (err) {
+      return handleServerError(err);
+    }
+  },
 };

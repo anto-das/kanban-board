@@ -28,7 +28,7 @@ export default function LoginPage() {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const loadingId = toast.loading("Registering...");
+      const loadingId = toast.loading("Signing...");
       try {
         const { data } = await login(value);
         if (data?.token) {

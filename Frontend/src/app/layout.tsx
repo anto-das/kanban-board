@@ -24,11 +24,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       suppressHydrationWarning={true}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      
     >
-      <body className="min-h-full flex flex-col" >
+      <body className="min-h-full flex flex-col">
         {children}
-        <Toaster duration={1000} richColors position="top-right" />
+        <Toaster duration={2000} richColors position="top-right" />
       </body>
     </html>
   );

@@ -232,6 +232,7 @@ const Board = ({
               boardId={boardId}
               isModalOpen={isModalOpen}
               isColumnUpdateModalOpen={isColumnUpdateModalOpen}
+              setColumns={setColumns}
             />
           ))}
         </div>

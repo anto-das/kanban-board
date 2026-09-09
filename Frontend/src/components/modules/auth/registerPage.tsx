@@ -11,9 +11,11 @@ import { toast } from "sonner";
 import { register } from "@/app/actions/auth.action";
 import { Field, FieldError, FieldLabel } from "../../ui/field";
 import { Input } from "../../ui/input";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const router = useRouter();
 
   const formSchema = z.object({
     name: z.string().min(5, "Name must be at least 5 characters"),
@@ -35,6 +37,7 @@ export default function RegisterPage() {
       try {
         const { data } = await register(value);
         toast.success(`Welcome ${data?.user.name}`, { id: loadingId });
+        router.push("/dashboard");
       } catch (error: any) {
         toast.error(error.message, { id: loadingId });
       }

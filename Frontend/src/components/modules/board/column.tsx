@@ -15,19 +15,24 @@ import { CSS } from "@dnd-kit/utilities";
 import { UpdateColumnModal } from "../../ui/customUI/updateColumnModal";
 import { AddTaskDialog } from "../../ui/customUI/addToTaskModal";
 import Task from "./task";
+import { toast } from "sonner";
+import { deleteColumn } from "@/app/actions/column.action";
 
 const Column = ({
   column,
   boardId,
   isModalOpen,
   isColumnUpdateModalOpen,
+  setColumns,
 }: {
   column: any;
   boardId: string;
   isModalOpen: boolean;
   isColumnUpdateModalOpen: boolean;
+  setColumns: any;
 }) => {
   const isDarkMode = false;
+
   const { setNodeRef: setTaskDropRef } = useDroppable({
     id: `column-${column.id}`,
   });
@@ -49,6 +54,48 @@ const Column = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+  };
+  const handleDeleteColumn = async (boardId: string, columnId: string) => {
+    const loadingId = toast.loading("Deleting the column...");
+    try {
+      const res = await deleteColumn({ boardId, columnId });
+      toast.success("Column Deleted successfully..", { id: loadingId });
+      setColumns((prev: any) => prev.filter((col: any) => columnId !== col.id));
+    } catch (err) {
+      toast.error("Column not deleted something wrong..", { id: loadingId });
+    }
+  };
+
+  const confirmDelete = (itemName: string, onConfirm: () => void) => {
+    toast.custom((t) => (
+      <div className="w-[350px] rounded-lg border bg-white p-4 shadow-lg">
+        <h3 className="font-semibold text-gray-900">Delete {itemName}?</h3>
+
+        <p className="mt-1 text-sm text-gray-500">
+          Are you sure you want to delete this {itemName}? This action cannot be
+          undone.
+        </p>
+
+        <div className="mt-4 flex justify-end gap-2">
+          <button
+            onClick={() => toast.dismiss(t)}
+            className="rounded-md border px-3 py-2 text-sm"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={() => {
+              toast.dismiss(t);
+              onConfirm();
+            }}
+            className="rounded-md bg-red-500 px-3 py-2 text-sm text-white"
+          >
+            Yes, Delete
+          </button>
+        </div>
+      </div>
+    ));
   };
 
   return (
@@ -84,7 +131,7 @@ const Column = ({
             <GripVertical size={16} />
           </button>
 
-          <span className="w-2 h-2 rounded-full flex-shrink-0 bg-indigo-500" />
+          <span className="w-2 h-2 rounded-full shrink-0 bg-indigo-500" />
 
           <h3 className="font-bold text-xs tracking-wider text-slate-400 uppercase truncate">
             {column.title}
@@ -138,7 +185,20 @@ const Column = ({
             />
           )}
 
+          {/* <button
+  onClick={() =>
+    confirmDelete("task", () => {
+      deleteTask(task.id);
+    })
+  }
+> */}
+
           <button
+            onClick={() =>
+              confirmDelete(column.title, () =>
+                handleDeleteColumn(boardId, column.id),
+              )
+            }
             className="
               p-1
               rounded
